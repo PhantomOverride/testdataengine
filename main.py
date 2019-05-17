@@ -10,10 +10,13 @@ def main():
     args = parser.parse_args()
     
     if args.pnr:
-        print(PersonalNumberGenerator.pnr())
+        p = PersonalNumberGenerator.PersonalNumberGenerator()
+        print(p.pnr())
+
     elif args.name:
         p = PersonNameGenerator.PersonNameGenerator()
         print(p.full_name())
+
     else:
         print("No options supplied!")
 
