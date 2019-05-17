@@ -1,6 +1,7 @@
 from testdatagenerator import PersonNameGenerator
 import re
 
+
 class EmailGenerator:
     def __init__(self):
         pass
