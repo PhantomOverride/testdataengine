@@ -12,19 +12,23 @@ def main():
     tool.add_argument('-n', '--name', action='store_true', default=False, help="Generate Personal Name")
     tool.add_argument('-e', '--email', action='store_true', default=False, help="Generate Personal Email")
 
+    parser.add_argument('-c', '--count', type=int, default=1, help="Number of items to generate")
+
     args = parser.parse_args()
 
     if args.pnr:
         p = PersonalNumberGenerator.PersonalNumberGenerator()
-        print(p.pnr())
 
     elif args.name:
         p = PersonNameGenerator.PersonNameGenerator()
-        print(p.full_name())
 
     elif args.email:
         p = EmailGenerator.EmailGenerator()
-        print(p.personal_email())
+
+    count = args.count
+    while count > 0:
+        print(p.generator())
+        count -= 1
 
 
 if __name__ == "__main__":

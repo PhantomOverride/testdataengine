@@ -579,3 +579,6 @@ class PersonNameGenerator:
 
     def last_name(self):
         return random.choice(self.lastnames)
+
+    def generator(self):
+        return self.full_name()

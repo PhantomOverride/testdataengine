@@ -4,11 +4,11 @@ import re
 
 class EmailGenerator:
     def __init__(self):
-        pass
+        self.p = PersonNameGenerator.PersonNameGenerator()
 
     def personal_email(self):
-        p = PersonNameGenerator.PersonNameGenerator()
-        name = p.full_name()
+
+        name = self.p.full_name()
 
         name = name.replace(' ', '')
         name = name.replace('-', '')
@@ -20,3 +20,6 @@ class EmailGenerator:
         name = re.sub('[ûü]', 'u', name)
 
         return name.lower() + '@example.com'
+
+    def generator(self):
+        return self.personal_email()
