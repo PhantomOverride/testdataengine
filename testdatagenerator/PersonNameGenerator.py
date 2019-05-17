@@ -569,16 +569,13 @@ class PersonNameGenerator:
                  'Öfverlund', 'Ögren', 'Öhlund', 'Öhman', 'Öhrman', 'Öjeberg', 'Øllgaard', 'Ölund', 'Öman',
                  'Önnersdotter', 'Önnerson', 'Önnersson', 'Örtberg', 'Örtegren', 'Ørting', 'Ørum', 'Öst', 'Östberg',
                  'Östensdotter', 'Östensson', 'Österberg', 'Østergaard', 'Östergren', 'Österlund', 'Östgren', 'Östlund',
-                 'Östman', 'Øxendrup', 'Hazell', 'Lehndal', 'Mulder', 'Steiner'];
-
+                 'Östman', 'Øxendrup', 'Hazell', 'Lehndal', 'Mulder', 'Steiner']
 
     def full_name(self):
         return self.first_name() + " " + self.last_name()
 
-
     def first_name(self):
         return random.choice(self.firstnames)
-
 
     def last_name(self):
         return random.choice(self.lastnames)
