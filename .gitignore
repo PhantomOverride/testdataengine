@@ -1,0 +1,3 @@
+# Ignore the folder for visual studio code
+.vscode
+__pycache__/
