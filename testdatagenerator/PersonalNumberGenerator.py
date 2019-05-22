@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from testdatagenerator.Utilities import luhn
-from faker import Faker
 from random import randint
 try:
     from burp import IBurpExtender                          # Required for all extensions
@@ -21,13 +19,32 @@ except ImportError:
 
 class PersonalNumberGenerator:
     def __init__(self):
-        self.faker = Faker()
+        pass
 
     def pnr(self):
-        date = self.faker.date_time()
-        pnr = date.strftime("%y%m%d-")
-        pnr += str(randint(0, 9)) + str(randint(0, 9)) + str(randint(0, 9))
-        return pnr + str(luhn(pnr))
+        year = str(randint(0, 99))
+        month = str(randint(1, 12))
+        day = str(randint(1, 28))
+        pnr = year.zfill(2) + month.zfill(2) + day.zfill(2) + "-"
+        pnr += str(randint(0, 999)).zfill(3)
+
+        sum = 0
+        odd = False
+        for s in pnr:
+            if s == "-":
+                continue
+            odd = not odd
+            if odd:
+                temp = str(int(s) * 2)
+                for i in temp:
+                    sum += int(i)
+            else:
+                sum += int(s)
+        sum = str(sum)
+        luhn = int(sum[len(sum) - 1])
+        luhn = luhn if luhn == 0 else 10 - luhn
+        pnr = ("19" if int(year) > 18 else "20") + pnr
+        return pnr + str(luhn)
 
     def generator(self):
         return self.pnr()
@@ -51,7 +68,7 @@ if __burp:
             self._helpers = callbacks.getHelpers()
 
             # set our extension name
-            callbacks.setExtensionName("Intruder PersonalNumber")
+            callbacks.setExtensionName("Intruder PersonalNumberGenerator")
 
             # register ourselves as a message editor tab factory
             callbacks.registerIntruderPayloadGeneratorFactory(self)
@@ -65,34 +82,6 @@ if __burp:
             # return a new IIntruderPayloadGenerator to generate payloads for this attack
             return IntruderPayloadGenerator()
 
-        #
-        # implement IIntruderPayloadProcessor
-        #
-
-        def getProcessorName(self):
-            return "Serialized input wrapper"
-
-        def processPayload(self, currentPayload, originalPayload, baseValue):
-            # decode the base value
-            dataParameter = self._helpers.bytesToString(
-                    self._helpers.base64Decode(self._helpers.urlDecode(baseValue)))
-
-            # parse the location of the input string in the decoded data
-            start = dataParameter.index("input=") + 6
-            if start == -1:
-                return currentPayload
-
-            prefix = dataParameter[0:start]
-            end = dataParameter.index("&", start)
-            if end == -1:
-                end = len(dataParameter)
-
-            suffix = dataParameter[end:len(dataParameter)]
-
-            # rebuild the serialized data with the new payload
-            dataParameter = prefix + self._helpers.bytesToString(currentPayload) + suffix
-            return self._helpers.stringToBytes(
-                    self._helpers.urlEncode(self._helpers.base64Encode(dataParameter)))
 
     class IntruderPayloadGenerator(IIntruderPayloadGenerator):
         def __init__(self):
