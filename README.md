@@ -22,3 +22,6 @@ To install the package with distutils use
 ```
 $ python ./setup.py install --user
 ```
+
+## Burp
+To use testdataengine as a burp plugin you need to manully move the file `burptestdatagenerator.py` and the folder `testdatagenerator` to the folder burp uses to load modules. When they are moved there, they can be loaded as any other python extension.

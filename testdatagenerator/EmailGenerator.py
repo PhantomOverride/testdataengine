@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from testdatagenerator import PersonNameGenerator
 import re
 
