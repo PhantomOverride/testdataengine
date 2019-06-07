@@ -1,6 +1,8 @@
 # testdataengine
 Tool for generating input data for testing
 
+
+## Usage
 ```
 $ ./main.py -h
 usage: main.py [-h] [-p] [-n] [-e]
@@ -13,4 +15,10 @@ optional arguments:
   -p, --pnr    Generate Personal Number
   -n, --name   Generate Personal Name
   -e, --email  Generate Personal Email
+```
+
+## Installation
+To install the package with distutils use 
+```
+$ python ./setup.py install --user
 ```

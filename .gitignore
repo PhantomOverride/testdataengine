@@ -1,3 +1,7 @@
 .idea
 .vscode
 __pycache__/
+build/
+
+# File from https://github.com/securityMB/burp-exceptions, used for burp debuging
+exceptions_fix.py
