@@ -25,6 +25,10 @@ def main():
     elif args.email:
         p = EmailGenerator.EmailGenerator()
 
+    else:
+        print("No arguments given, exiting...")
+        exit()
+
     count = args.count
     while count > 0:
         print(p.generator())
