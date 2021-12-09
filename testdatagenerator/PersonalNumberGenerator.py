@@ -6,14 +6,14 @@ from testdatagenerator import Utilities
 
 
 class PersonalNumberGenerator:
-    def __init__(self):
-        pass
+    def __init__(self, dashSeparator):
+        self.separator = "-" if dashSeparator else ""
 
     def pnr(self):
         year = str(randint(0, 99))
         month = str(randint(1, 12))
         day = str(randint(1, 28))
-        pnr = year.zfill(2) + month.zfill(2) + day.zfill(2) + "-"
+        pnr = year.zfill(2) + month.zfill(2) + day.zfill(2) + self.separator
         pnr += str(randint(0, 999)).zfill(3)
 
         luhn = Utilities.luhn(pnr)

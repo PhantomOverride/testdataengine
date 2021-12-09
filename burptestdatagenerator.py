@@ -29,6 +29,7 @@ class BurpExtender(IBurpExtender):
         callbacks.setExtensionName("TestDataEngine")
 
         # register the IntruderPayloadFactory
+        callbacks.registerIntruderPayloadGeneratorFactory(IntruderPayloadGeneratorFactory('PNR-'))
         callbacks.registerIntruderPayloadGeneratorFactory(IntruderPayloadGeneratorFactory('PNR'))
 
         return
@@ -39,9 +40,14 @@ class IntruderPayloadGeneratorFactory(IIntruderPayloadGeneratorFactory):
         
     '''
     def __init__(self, generatorType):
-        if generatorType == 'PNR':
-            self.generatorDescriptor = "1000 Personal Numbers"
+        if generatorType == 'PNR-':
+            self.generatorDescriptor = "1000 Personal Numbers (YYYYMMDD-XXXX)"
             self.generatorClass = PnrIntruderPayloadGenerator
+            self._dashSeparator = True
+        elif generatorType == 'PNR':
+            self.generatorDescriptor = "1000 Personal Numbers (YYYYMMDDXXXX)"
+            self.generatorClass = PnrIntruderPayloadGenerator
+            self._dashSeparator = False
         else:
             raise ValueError
 
@@ -50,12 +56,15 @@ class IntruderPayloadGeneratorFactory(IIntruderPayloadGeneratorFactory):
 
     def createNewInstance(self, attack):
         # return a new IIntruderPayloadGenerator to generate payloads for this attack
-        return self.generatorClass()
+        if self.generatorClass == PnrIntruderPayloadGenerator:
+            return self.generatorClass(self._dashSeparator)
+        else:
+            return self.generatorClass()
 
 
 class PnrIntruderPayloadGenerator(IIntruderPayloadGenerator):
-    def __init__(self):
-        self._pnr = PersonalNumberGenerator.PersonalNumberGenerator()
+    def __init__(self, dashSeparator=True):
+        self._pnr = PersonalNumberGenerator.PersonalNumberGenerator(dashSeparator)
         self._reported = []
 
     def hasMorePayloads(self):
