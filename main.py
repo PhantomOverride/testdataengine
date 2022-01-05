@@ -17,7 +17,7 @@ def main():
     args = parser.parse_args()
 
     if args.pnr:
-        p = PersonalNumberGenerator.PersonalNumberGenerator()
+        p = PersonalNumberGenerator.PersonalNumberGenerator(True)
 
     elif args.name:
         p = PersonNameGenerator.PersonNameGenerator()
