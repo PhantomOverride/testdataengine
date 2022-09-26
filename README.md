@@ -15,6 +15,7 @@ optional arguments:
   -p, --pnr    Generate Personal Number
   -n, --name   Generate Personal Name
   -e, --email  Generate Personal Email
+  -u, --uuid   Generate UUID
 ```
 
 ## Installation
