@@ -2,7 +2,7 @@
 
 import argparse
 from testdatagenerator import PersonalNumberGenerator, PersonNameGenerator, \
-                              EmailGenerator
+                              EmailGenerator, UUIDGenerator
 
 
 def main():
@@ -11,6 +11,7 @@ def main():
     tool.add_argument('-p', '--pnr', action='store_true', default=False, help="Generate Personal Number")
     tool.add_argument('-n', '--name', action='store_true', default=False, help="Generate Personal Name")
     tool.add_argument('-e', '--email', action='store_true', default=False, help="Generate Personal Email")
+    tool.add_argument('-u', '--uuid', action='store_true', default=False, help="Generate UUID")
 
     parser.add_argument('-c', '--count', type=int, default=1, help="Number of items to generate")
 
@@ -24,6 +25,9 @@ def main():
 
     elif args.email:
         p = EmailGenerator.EmailGenerator()
+
+    elif args.uuid:
+        p = UUIDGenerator.UUIDGenerator()
 
     else:
         print("No arguments given, exiting...")
